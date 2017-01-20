@@ -1,12 +1,4 @@
-// --------------------------------------------------------------------------------
-// Programmer: Jason Thorpe
-// Date        1/20/2017 9:10:12 AM
-// Language:   javascript
-// Purpose:    
-// Comments:   
-// --------------------------------------------------------------------------------
-
-
+/// <reference path="typings.d.ts"/>
 winston = require('winston')
 winston.defaults
 
