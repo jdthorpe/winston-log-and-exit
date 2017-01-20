@@ -49,7 +49,12 @@ and with a user-instantiated logger like so:
 	process.nextTick(logger.info("info","This message probably won't be included in the log files.")
 	setTimeout(logger.info("info","This message almost certianly won't be included in the log files."),100)
 
-## Installation:
 
-	npm inistall winston-log-and-exit
+This can also be used to ensure that uncaught exceptions are logged:
 
+	require('winston-log-and-exit');
+	process.on('uncaughtException', function (err) {
+		// use `winston` or your own Logger instance as appropriate
+		winston.error("Uncaught Exception",err);
+		winston.log_and_exit("info","bye",1);
+	});
