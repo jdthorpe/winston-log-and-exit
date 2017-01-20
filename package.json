@@ -1,0 +1,25 @@
+{
+  "name": "winston-log-and-exit",
+  "version": "1.0.0",
+  "description": "Patch for assuring that winston log messages are written to file before exiting",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdthorpe/winston-log-and-exit.git"
+  },
+  "keywords": [
+    "winston",
+    "exit",
+    "process.exit",
+    "flush"
+  ],
+  "author": "Jason Thorpe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jdthorpe/winston-log-and-exit/issues"
+  },
+  "homepage": "https://github.com/jdthorpe/winston-log-and-exit#readme"
+}
