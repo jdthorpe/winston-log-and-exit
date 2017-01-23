@@ -1,6 +1,6 @@
 {
   "name": "winston-log-and-exit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Patch for assuring that winston log messages are written to file before exiting",
   "main": "index.js",
   "scripts": {
