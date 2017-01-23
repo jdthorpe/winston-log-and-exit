@@ -27,10 +27,13 @@ with Winston's default logger like so:
 	// add a file transport to winston's default logger
 	winston.add(winston.transports.File, { filename: 'somefile.log' });
 
-	winston.log_and_exit("info","This message *will* be included in the log files.",0)
-	winston.info("info","This message *might* be included in the log files.")
-	process.nextTick(winston.info("info","This message probably won't be included in the log files.")
-	setTimeout(winston.info("info","This message almost certianly won't be included in the log files."),100)
+	winston.log_and_exit(/* log level */ "info" ,
+						 /* log text  */ "This message *will* be included in the log files." ,
+						 /* exit code */ 0 )
+
+	winston.info("This message *might* be included in the log files.")
+	process.nextTick(winston.info("This message probably won't be included in the log files.")
+	setTimeout(winston.info("This message almost certianly won't be included in the log files."),100)
 
 and with a user-instantiated logger like so:
 
@@ -45,9 +48,9 @@ and with a user-instantiated logger like so:
 	});
 
 	logger.log_and_exit("info","This message *will* be included in the log files.",0)
-	logger.info("info","This message *might* be included in the log files.")
-	process.nextTick(logger.info("info","This message probably won't be included in the log files.")
-	setTimeout(logger.info("info","This message almost certianly won't be included in the log files."),100)
+	logger.info("This message *might* be included in the log files.")
+	process.nextTick(logger.info("This message probably won't be included in the log files.")
+	setTimeout(logger.info("This message almost certianly won't be included in the log files."),100)
 
 
 This can also be used to ensure that uncaught exceptions are logged:
