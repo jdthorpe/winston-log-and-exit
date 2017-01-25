@@ -1,9 +1,10 @@
-/// <reference path="typings.d.ts"/>
+/// <reference path="./typings.d.ts"/>
+
 winston = require('winston')
 winston.defaults
 
 winston.log_and_exit = 
-winston.logAndExit =  function(level,msg,code){
+winston.logAndExit =  function(level,msg,code_or_callback){
 	var self = this;
 	this.log(level,msg, function(err) {
 	   	var numFlushes = 0;
@@ -14,14 +15,20 @@ winston.logAndExit =  function(level,msg,code){
 			   	self.default.transports[k]._stream.once("finish", function() {
 				   	numFlushed += 1;
 				   	if (numFlushes === numFlushed) {
-					   	process.exit(code);
+                        if(typeof code_or_callback === 'function')
+                            code_or_callback()
+                        else
+					   	    process.exit(code_or_callback);
 				   	}
 			   	});
 			   	self.default.transports[k]._stream.end();
 		   	}
 	   	});
 	   	if (numFlushes === 0) {
-		   	process.exit(code);
+            if(typeof code_or_callback === 'function')
+                code_or_callback()
+            else
+                process.exit(code_or_callback);
 	   	}
    	});
 }
@@ -38,16 +45,23 @@ winston.Logger.prototype.logAndExit =  function(level,msg,code){
 			   	self.transports[k]._stream.once("finish", function() {
 				   	numFlushed += 1;
 				   	if (numFlushes === numFlushed) {
-					   	process.exit(code);
+                        if(typeof code_or_callback === 'function')
+                            code_or_callback()
+                        else
+					   	    process.exit(code_or_callback);
 				   	}
 			   	});
 			   	self.transports[k]._stream.end();
 		   	}
 	   	});
 	   	if (numFlushes === 0) {
-		   	process.exit(code);
+            if(typeof code_or_callback === 'function')
+                code_or_callback()
+            else
+                process.exit(code_or_callback);
 	   	}
    	});
 }
 
 delete module.exports
+

@@ -12,7 +12,7 @@ declare module "winston"{
     }
 
     interface log_and_exit_method {
-        (level: string, msg: string, exitcode?:number ):void;
+        (level: string, msg: string, exitcode?:number|{():void} ):void;
     }
 }
 

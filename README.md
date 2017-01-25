@@ -61,3 +61,17 @@ This can also be used to ensure that uncaught exceptions are logged:
 		winston.error("Uncaught Exception",err);
 		winston.log_and_exit("info","bye",1);
 	});
+
+Note that the third argument may optionally be a callback which is
+responsible for calling `process.exit()` (and if it doesn't, your begging
+for a memory leak).
+
+	winston.log_and_exit("info","bye",function(){
+		try{
+			DB.close();
+			winston.log("This message will NOT get saved to file!")
+		}finally{
+			process.exit(0);
+		}
+	});
+
