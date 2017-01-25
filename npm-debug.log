@@ -1,111 +1,32 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/Users/jasonthorpe/.nvm/versions/node/v7.1.0/bin/node',
-1 verbose cli   '/Users/jasonthorpe/.nvm/versions/node/v7.1.0/bin/npm',
-1 verbose cli   'publish',
-1 verbose cli   '--force' ]
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'version',
+1 verbose cli   'patch',
+1 verbose cli   '-m',
+1 verbose cli   'Allowing third parameter to be a callback' ]
 2 info using npm@3.10.9
-3 info using node@v7.1.0
-4 warn using --force I sure hope you know what you are doing.
-5 verbose publish [ '.' ]
-6 silly cache add args [ '.', null ]
-7 verbose cache add spec .
-8 silly cache add parsed spec Result {
-8 silly cache add   raw: '.',
-8 silly cache add   scope: null,
-8 silly cache add   escapedName: null,
-8 silly cache add   name: null,
-8 silly cache add   rawSpec: '.',
-8 silly cache add   spec: '/Users/jasonthorpe/temp/winston-log-and-exit',
-8 silly cache add   type: 'directory' }
-9 verbose addLocalDirectory /Users/jasonthorpe/.npm/winston-log-and-exit/1.0.0/package.tgz not in flight; packing
-10 verbose correctMkdir /Users/jasonthorpe/.npm correctMkdir not in flight; initializing
-11 info lifecycle winston-log-and-exit@1.0.0~prepublish: winston-log-and-exit@1.0.0
-12 silly lifecycle winston-log-and-exit@1.0.0~prepublish: no script for prepublish, continuing
-13 verbose tar pack [ '/Users/jasonthorpe/.npm/winston-log-and-exit/1.0.0/package.tgz',
-13 verbose tar pack   '/Users/jasonthorpe/temp/winston-log-and-exit' ]
-14 verbose tarball /Users/jasonthorpe/.npm/winston-log-and-exit/1.0.0/package.tgz
-15 verbose folder /Users/jasonthorpe/temp/winston-log-and-exit
-16 verbose addLocalTarball adding from inside cache /Users/jasonthorpe/.npm/winston-log-and-exit/1.0.0/package.tgz
-17 verbose correctMkdir /Users/jasonthorpe/.npm correctMkdir not in flight; initializing
-18 silly cache afterAdd winston-log-and-exit@1.0.0
-19 verbose afterAdd /Users/jasonthorpe/.npm/winston-log-and-exit/1.0.0/package/package.json not in flight; writing
-20 verbose correctMkdir /Users/jasonthorpe/.npm correctMkdir not in flight; initializing
-21 verbose afterAdd /Users/jasonthorpe/.npm/winston-log-and-exit/1.0.0/package/package.json written
-22 silly publish { name: 'winston-log-and-exit',
-22 silly publish   version: '1.0.0',
-22 silly publish   description: 'Patch for assuring that winston log messages are written to file before exiting',
-22 silly publish   main: 'index.js',
-22 silly publish   scripts: { test: 'echo "Error: no test specified" && exit 1' },
-22 silly publish   repository:
-22 silly publish    { type: 'git',
-22 silly publish      url: 'git+https://github.com/jdthorpe/winston-log-and-exit.git' },
-22 silly publish   keywords: [ 'winston', 'exit', 'process.exit', 'flush' ],
-22 silly publish   author: { name: 'Jason Thorpe' },
-22 silly publish   license: 'MIT',
-22 silly publish   bugs: { url: 'https://github.com/jdthorpe/winston-log-and-exit/issues' },
-22 silly publish   homepage: 'https://github.com/jdthorpe/winston-log-and-exit#readme',
-22 silly publish   readme: '\n## The Problem\n\nWinston creates may execute logging callbacks before file streams have\nbeen flushed, and creates file streams asynchronously but executes the\nclose methods synchronously, and as a result, the following messages may\nnote be logged to file:\n\n\tlogger.info("This message may not be saved to file.",\n\t\tfunction(){process.exit()})\n\nand:\n\n\tlogger.info("This message probably won\'t be saved to file.")\n\tlogger.close()\n\tprocess.exit()\n\n## The solution\n\n`winston-log-and-exit` is a patch which adds a `log_and_exit()` (or\nequivalently `logAndExit()`) method to Winston, which can be used\nwith Winston\'s default logger like so:\n\n\tvar winston = require(\'winston\');\n\trequire(\'winston-log-and-exit\');\n\n\t// add a file transport to winston\'s default logger\n\twinston.add(winston.transports.File, { filename: \'somefile.log\' });\n\n\twinston.log_and_exit(/* log level */ "info" ,\n\t\t\t\t\t\t /* log text  */ "This message *will* be included in the log files." ,\n\t\t\t\t\t\t /* exit code */ 0 )\n\n\twinston.info("This message *might* be included in the log files.")\n\tprocess.nextTick(winston.info("This message probably won\'t be included in the log files.")\n\tsetTimeout(winston.info("This message almost certianly won\'t be included in the log files."),100)\n\nand with a user-instantiated logger like so:\n\n\tvar winston = require(\'winston\');\n\trequire(\'winston-log-and-exit\');\n\n\tvar logger = new (winston.Logger)({\n\t\ttransports: [\n\t\t\tnew (winston.transports.Console)(),\n\t\t\tnew (winston.transports.File)({ filename: \'somefile.log\' })\n\t\t]\n\t});\n\n\tlogger.log_and_exit("info","This message *will* be included in the log files.",0)\n\tlogger.info("This message *might* be included in the log files.")\n\tprocess.nextTick(logger.info("This message probably won\'t be included in the log files.")\n\tsetTimeout(logger.info("This message almost certianly won\'t be included in the log files."),100)\n\n\nThis can also be used to ensure that uncaught exceptions are logged:\n\n\trequire(\'winston-log-and-exit\');\n\tprocess.on(\'uncaughtException\', function (err) {\n\t\t// use `winston` or your own Logger instance as appropriate\n\t\twinston.error("Uncaught Exception",err);\n\t\twinston.log_and_exit("info","bye",1);\n\t});\n',
-22 silly publish   readmeFilename: 'README.md',
-22 silly publish   gitHead: '7c8969d49c04809fedc59d7615b5c72f24202f06',
-22 silly publish   _id: 'winston-log-and-exit@1.0.0',
-22 silly publish   _shasum: '2815212addc76d1687b16a61670b032aff8487f6',
-22 silly publish   _from: '.' }
-23 verbose getPublishConfig undefined
-24 silly mapToRegistry name winston-log-and-exit
-25 silly mapToRegistry using default registry
-26 silly mapToRegistry registry https://registry.npmjs.org/
-27 silly mapToRegistry data Result {
-27 silly mapToRegistry   raw: 'winston-log-and-exit',
-27 silly mapToRegistry   scope: null,
-27 silly mapToRegistry   escapedName: 'winston-log-and-exit',
-27 silly mapToRegistry   name: 'winston-log-and-exit',
-27 silly mapToRegistry   rawSpec: '',
-27 silly mapToRegistry   spec: 'latest',
-27 silly mapToRegistry   type: 'tag' }
-28 silly mapToRegistry uri https://registry.npmjs.org/winston-log-and-exit
-29 verbose publish registryBase https://registry.npmjs.org/
-30 silly publish uploading /Users/jasonthorpe/.npm/winston-log-and-exit/1.0.0/package.tgz
-31 verbose request uri https://registry.npmjs.org/winston-log-and-exit
-32 verbose request sending authorization for write operation
-33 info attempt registry request try #1 at 7:13:05 AM
-34 verbose request using bearer token for auth
-35 verbose request id de1ac6fc07e523e4
-36 http request PUT https://registry.npmjs.org/winston-log-and-exit
-37 http 403 https://registry.npmjs.org/winston-log-and-exit
-38 verbose headers { 'content-type': 'application/json',
-38 verbose headers   'cache-control': 'max-age=300',
-38 verbose headers   'content-length': '95',
-38 verbose headers   'accept-ranges': 'bytes',
-38 verbose headers   date: 'Mon, 23 Jan 2017 15:13:07 GMT',
-38 verbose headers   via: '1.1 varnish',
-38 verbose headers   connection: 'keep-alive',
-38 verbose headers   'x-served-by': 'cache-sjc3625-SJC',
-38 verbose headers   'x-cache': 'MISS',
-38 verbose headers   'x-cache-hits': '0',
-38 verbose headers   'x-timer': 'S1485184387.595138,VS0,VE187',
-38 verbose headers   vary: 'Accept-Encoding' }
-39 verbose request invalidating /Users/jasonthorpe/.npm/registry.npmjs.org/winston-log-and-exit on PUT
-40 error publish Failed PUT 403
-41 verbose stack Error: "You cannot publish over the previously published version 1.0.0." : winston-log-and-exit
-41 verbose stack     at makeError (/Users/jasonthorpe/.nvm/versions/node/v7.1.0/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
-41 verbose stack     at CachingRegistryClient.<anonymous> (/Users/jasonthorpe/.nvm/versions/node/v7.1.0/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:290:14)
-41 verbose stack     at Request._callback (/Users/jasonthorpe/.nvm/versions/node/v7.1.0/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:210:14)
-41 verbose stack     at Request.self.callback (/Users/jasonthorpe/.nvm/versions/node/v7.1.0/lib/node_modules/npm/node_modules/request/request.js:187:22)
-41 verbose stack     at emitTwo (events.js:106:13)
-41 verbose stack     at Request.emit (events.js:191:7)
-41 verbose stack     at Request.<anonymous> (/Users/jasonthorpe/.nvm/versions/node/v7.1.0/lib/node_modules/npm/node_modules/request/request.js:1048:10)
-41 verbose stack     at emitOne (events.js:96:13)
-41 verbose stack     at Request.emit (events.js:188:7)
-41 verbose stack     at IncomingMessage.<anonymous> (/Users/jasonthorpe/.nvm/versions/node/v7.1.0/lib/node_modules/npm/node_modules/request/request.js:969:12)
-42 verbose statusCode 403
-43 verbose pkgid winston-log-and-exit
-44 verbose cwd /Users/jasonthorpe/temp/winston-log-and-exit
-45 error Darwin 16.1.0
-46 error argv "/Users/jasonthorpe/.nvm/versions/node/v7.1.0/bin/node" "/Users/jasonthorpe/.nvm/versions/node/v7.1.0/bin/npm" "publish" "--force"
-47 error node v7.1.0
-48 error npm  v3.10.9
-49 error code E403
-50 error "You cannot publish over the previously published version 1.0.0." : winston-log-and-exit
-51 error If you need help, you may report this error at:
-51 error     <https://github.com/npm/npm/issues>
-52 verbose exit [ 1, true ]
+3 info using node@v6.9.2
+4 info git [ 'status', '--porcelain' ]
+5 verbose stack Error: Git working directory not clean.
+5 verbose stack D npm-debug.log
+5 verbose stack     at C:\Program Files\nodejs\node_modules\npm\lib\version.js:247:19
+5 verbose stack     at C:\Program Files\nodejs\node_modules\npm\lib\utils\no-progress-while-running.js:21:8
+5 verbose stack     at ChildProcess.exithandler (child_process.js:197:7)
+5 verbose stack     at emitTwo (events.js:106:13)
+5 verbose stack     at ChildProcess.emit (events.js:191:7)
+5 verbose stack     at maybeClose (internal/child_process.js:877:16)
+5 verbose stack     at Socket.<anonymous> (internal/child_process.js:334:11)
+5 verbose stack     at emitOne (events.js:96:13)
+5 verbose stack     at Socket.emit (events.js:188:7)
+5 verbose stack     at Pipe._handle.close [as _onclose] (net.js:498:12)
+6 verbose cwd C:\Users\MPGWRK-006\temp\winston-log-and-exit
+7 error Windows_NT 10.0.14393
+8 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "version" "patch" "-m" "Allowing third parameter to be a callback"
+9 error node v6.9.2
+10 error npm  v3.10.9
+11 error Git working directory not clean.
+11 error D npm-debug.log
+12 error If you need help, you may report this error at:
+12 error     <https://github.com/npm/npm/issues>
+13 verbose exit [ 1, true ]
