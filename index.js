@@ -34,7 +34,7 @@ winston.logAndExit =  function(level,msg,code_or_callback){
 }
 
 winston.Logger.prototype.log_and_exit = 
-winston.Logger.prototype.logAndExit =  function(level,msg,code){
+winston.Logger.prototype.logAndExit =  function(level,msg,code_or_callback){
 	var self = this;
 	this.log(level,msg, function(err) {
 	   	var numFlushes = 0;
