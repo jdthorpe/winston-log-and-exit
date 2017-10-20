@@ -80,7 +80,7 @@ for a memory leak).
 In the rare event that you decide to implement your own [custom streaming
 transport](https://github.com/winstonjs/winston#adding-custom-transports), 
 in order to work with `winston-log-and-exit` your Transport needs a 
-[`._stream` attribute](https://github.com/winstonjs/winston/issues/228), which has an
+[`._stream` attribute](https://github.com/jdthorpe/winston-log-and-exit/blob/master/index.js#L13), which has an
 [`.end()` method](https://github.com/jdthorpe/winston-log-and-exit/blob/master/index.js#L24),
 and which issues a ["finish" event](https://github.com/jdthorpe/winston-log-and-exit/blob/master/index.js#L15)
 after all the messages that were logged before the `.end()` method was called have been flushed.
