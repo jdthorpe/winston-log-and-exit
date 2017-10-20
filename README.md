@@ -83,4 +83,4 @@ in order to work with `winston-log-and-exit` your Transport needs a
 [`._stream` attribute](https://github.com/winstonjs/winston/issues/228), which has an
 [`.end()` method](https://github.com/jdthorpe/winston-log-and-exit/blob/master/index.js#L24),
 and which issues a ["finish" event](https://github.com/jdthorpe/winston-log-and-exit/blob/master/index.js#L15)
-when all the messages that were logged before the `.end()` method was called.
+after all the messages that were logged before the `.end()` method was called have been flushed.
