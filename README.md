@@ -1,7 +1,7 @@
 
 ## The Problem
 
-Winston creates may execute logging callbacks before file streams have
+Winston may execute logging callbacks before file streams have
 been flushed, and creates file streams asynchronously but executes the
 close methods synchronously, and as a result, the following messages may
 note be logged to file:
